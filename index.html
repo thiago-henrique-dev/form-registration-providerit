@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Ficha Cadastral</title>
+</head>
+<body>
+    <!DOCTYPE html>
+    <html lang="pt-br">
+    <head>
+      <meta charset="UTF-8">
+      <title>Ficha Cadastral</title>
+      <link rel="stylesheet" href="style.css">
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;1,300;1,400&display=swap" rel="stylesheet"> 
+    </head>
+    <body>
+      <div class="container">
+        <h1 class="title">Ficha Cadastral</h1>
+    
+        <form class="form">
+          <div class="form__group">
+            <label for="nome" class="form__label">Nome:</label>
+            <input type="text" id="nome" name="nome" class="form__input" placeholder="Digite seu nome completo">
+          </div>
+    
+          <div class="form__group">
+            <label for="rg" class="form__label">RG:</label>
+            <input type="text" id="rg" name="rg" class="form__input" placeholder="Digite seu RG">
+          </div>
+    
+          <div class="form__group">
+          <label for="cpf" class="form__label">CPF:</label>
+          <input type="text" id="cpf" name="cpf" class="form__input" placeholder="Digite seu CPF" oninput="formateCPF(this)">
+        </div>
+    
+          <div class="form__group">
+            <label for="endereco" class="form__label">Endereço:</label>
+            <input type="text" id="endereco" name="endereco" class="form__input" placeholder="Digite seu Endereço">
+          </div>
+    
+          <div class="form__group">
+            <label for="sexo" class="form__label">Sexo:</label>
+            <select id="sexo" name="sexo" class="form__input">
+              <option value="masculino">Masculino</option>
+              <option value="feminino">Feminino</option>
+            </select>
+          </div>
+    
+          <div class="form__group">
+            <label for="data-nascimento" class="form__label">Data de Nascimento:</label>
+            <input type="date" id="data-nascimento" name="data-nascimento" class="form__input">
+          </div>
+    
+          <div class="form__group">
+            <label for="estado-civil" class="form__label">Situação Cívil:</label>
+            <select id="estado-civil" name="estado-civil" class="form__input">
+              <option value="solteiro">Solteiro(a)</option>
+              <option value="casado">Casado(a)</option>
+              <option value="viuvo">Viúvo(a)</option>
+            </select>
+          </div>
+    
+          <button type="submit" class="button button--primary">Enviar</button>
+          <button type="button" onclick="limparDados()" class="button button--secondary">Limpar</button>
+        </form>
+      </div>
+    
+
+  <script>
+   
+
+  </script>
+
+</body>
+</html>
