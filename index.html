@@ -19,8 +19,8 @@
     
         <form class="form">
           <div class="form__group">
-            <label for="nome" class="form__label">Nome:</label>
-            <input type="text" id="nome" name="nome" class="form__input" placeholder="Digite seu nome completo">
+            <label for="name" class="form__label">Nome:</label>
+            <input type="text" id="name" name="name" class="form__input" placeholder="Digite seu nome completo">
           </div>
     
           <div class="form__group">
@@ -34,13 +34,13 @@
         </div>
     
           <div class="form__group">
-            <label for="endereco" class="form__label">Endereço:</label>
-            <input type="text" id="endereco" name="endereco" class="form__input" placeholder="Digite seu Endereço">
-          </div>
+            <label for="adress" class="form__label">Endereço:</label>
+            <input type="sex" id="adress" name="adress" class="form__input" placeholder="Digite seu Endereço">
+          </sex>
     
           <div class="form__group">
-            <label for="sexo" class="form__label">Sexo:</label>
-            <select id="sexo" name="sexo" class="form__input">
+            <label for="sex" class="form__label">Sexo:</label>
+            <select id="sex" name="sex" class="form__input">
               <option value="masculino">Masculino</option>
               <option value="feminino">Feminino</option>
             </select>
@@ -48,12 +48,12 @@
     
           <div class="form__group">
             <label for="data-nascimento" class="form__label">Data de Nascimento:</label>
-            <input type="date" id="data-nascimento" name="data-nascimento" class="form__input">
+            <input type="datebirth" id="datebirth" name="datebirth" class="form__input">
           </div>
     
           <div class="form__group">
-            <label for="estado-civil" class="form__label">Situação Cívil:</label>
-            <select id="estado-civil" name="estado-civil" class="form__input">
+            <label for="status" class="form__label">Situação Cívil:</label>
+            <select id="status" name="status" class="form__input">
               <option value="solteiro">Solteiro(a)</option>
               <option value="casado">Casado(a)</option>
               <option value="viuvo">Viúvo(a)</option>
@@ -67,7 +67,36 @@
     
 
   <script>
-   
+    function limparDados() {
+      document.getElementById("name").value = "";
+      document.getElementById("rg").value = "";
+      document.getElementById("cpf").value = "";
+      document.getElementById("adress").value = "";
+      document.getElementById("sex").value = "masculino";
+      document.getElementById("datebirth").value = "";
+      document.getElementById("status").value = "solteiro";
+    }
+
+    function formateCPF(campo) {
+        // remove tudo que não é dígito
+        var valor = campo.value.replace(/\D/g, '');
+        
+        // insere o ponto após cada bloco de 3 dígitos
+        valor = valor.replace(/(\d{3})(\d)/, '$1.$2');
+        valor = valor.replace(/(\d{3})(\d)/, '$1.$2');
+        
+        // atualiza o valor do campo
+        campo.value = valor;
+}
+
+        const rgInput = document.getElementById('rg');
+
+        rgInput.addEventListener('input', (event) => {
+        const rgValue = event.target.value.replace(/\D/g, ''); // Remove tudo que não é dígito
+        const formattedRg = rgValue.replace(/^(\d{2})(\d{3})(\d{3})(\d{1})$/, "$1.$2.$3-$4"); // Formata o valor do RG com pontos e traço
+
+        event.target.value = formattedRg; // Atualiza o valor do input com o valor formatado
+        });
 
   </script>
 
