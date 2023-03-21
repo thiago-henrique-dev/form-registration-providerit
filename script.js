@@ -1,13 +1,13 @@
 function clearData() {
-    document.getElementById("nome").value = "";
-    document.getElementById("rg").value = "";
-    document.getElementById("cpf").value = "";
-    document.getElementById("endereco").value = "";
+    const elements = ["nome", "rg", "cpf", "endereco", "data-nascimento"];
+    
+    elements.forEach((element) => {
+      document.getElementById(element).value = "";
+    });
+    
     document.getElementById("sexo").value = "masculino";
-    document.getElementById("data-nascimento").value = "";
     document.getElementById("estado-civil").value = "solteiro";
   }
-
 function formatCPF(cpfInput) {
     let cpf = cpfInput.value.replace(/\D/g, ''); 
 
