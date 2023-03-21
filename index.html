@@ -25,12 +25,12 @@
     
           <div class="form__group">
             <label for="rg" class="form__label">RG:</label>
-            <input type="text" id="rg" name="rg" class="form__input">
+            <input type="text" id="rg" name="rg" class="form__input" placeholder="Digite seu RG" oninput="formatRG(this)">
           </div>
     
           <div class="form__group">
           <label for="cpf" class="form__label">CPF:</label>
-          <input type="text" id="cpf" name="cpf" class="form__input" placeholder="Digite seu CPF" oninput="formateCPF(this)">
+          <input type="text" id="cpf" name="cpf" class="form__input" placeholder="Digite seu CPF" oninput="formatCPF(this)">
         </div>
     
           <div class="form__group">
@@ -61,42 +61,12 @@
           </div>
     
           <button type="submit" class="button button--primary">Enviar</button>
-          <button type="button" onclick="limparDados()" class="button button--secondary">Limpar</button>
+          <button type="button" onclick="clearData()" class="button button--secondary">Limpar</button>
         </form>
       </div>
     
-
+      <script src="script.js"></script>
   <script>
-    function limparDados() {
-      document.getElementById("nome").value = "";
-      document.getElementById("rg").value = "";
-      document.getElementById("cpf").value = "";
-      document.getElementById("endereco").value = "";
-      document.getElementById("sexo").value = "masculino";
-      document.getElementById("data-nascimento").value = "";
-      document.getElementById("estado-civil").value = "solteiro";
-    }
-
-    function formateCPF(campo) {
-        // remove tudo que não é dígito
-        var valor = campo.value.replace(/\D/g, '');
-        
-        // insere o ponto após cada bloco de 3 dígitos
-        valor = valor.replace(/(\d{3})(\d)/, '$1.$2');
-        valor = valor.replace(/(\d{3})(\d)/, '$1.$2');
-        
-        // atualiza o valor do campo
-        campo.value = valor;
-}
-
-            const rgInput = document.getElementById('rg');
-
-        rgInput.addEventListener('input', (event) => {
-        const rgValue = event.target.value.replace(/\D/g, ''); // Remove tudo que não é dígito
-        const formattedRg = rgValue.replace(/^(\d{2})(\d{3})(\d{3})(\d{1})$/, "$1.$2.$3-$4"); // Formata o valor do RG com pontos e traço
-
-        event.target.value = formattedRg; // Atualiza o valor do input com o valor formatado
-        });
 
   </script>
 
