@@ -1,5 +1,6 @@
 function clearData() {
-    const elements = ["nome", "rg", "cpf", "endereco", "data-nascimento"];
+    const elements = ["nome", "rg", "cpf", "endereco", "data-nascimento", "endereco", "bairro", "compl",
+     "estado", "residencia", "cidade"];
     
     elements.forEach((element) => {
       document.getElementById(element).value = "";

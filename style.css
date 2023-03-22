@@ -64,7 +64,6 @@ body {
 
 .button {
     font-size: 16px;
-    margin-top: 10px;
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
@@ -153,8 +152,4 @@ transition: transform 0.3s ease-in-out;
 
 #data-nascimento:focus::before {
 transform: translateY(-50%) rotate(90deg);
-}
-/* Estilos para validação de formulário */
-.form__group.invalid {
-border: 1px solid #ff0000;
 }
