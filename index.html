@@ -11,7 +11,6 @@
       <meta charset="UTF-8">
       <title>Ficha Cadastral</title>
       <link rel="stylesheet" href="style.css">
-      <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;1,300;1,400&display=swap" rel="stylesheet"> 
     </head>
     <body>
       <div class="container">
@@ -39,7 +38,7 @@
           </div>
 
           <div class="form__group">
-            <input type="text" id="compl" name="compl" class="form__input" placeholder="Digite o complemento">
+            <input type="text" id="complemento" name="complemento" class="form__input" placeholder="Digite o complemento">
           </div>
 
           <div class="form__group">
@@ -47,7 +46,7 @@
           </div>
 
           <div class="form__group">
-            <input type="text" id="residencia" name="residencia" class="form__input" placeholder="Digite o numero da residência">
+            <input type="text" id="numero" name="numero" class="form__input" placeholder="Digite o numero da residência">
           </div>
 
           <div class="form__group">
@@ -80,7 +79,7 @@
             </select>
           </div>
     
-          <button type="submit" class="button button--primary">Enviar</button>
+          <button id="btn-salvar" onclick="saveDate()" type="submit" class="button button--primary">Enviar</button>
           <button type="button" onclick="clearData()" class="button button--secondary">Limpar</button>
         </form>
       </div>
