@@ -15,6 +15,7 @@ body {
     border: 1px solid #ddd;
     border-radius: 5px;
     box-shadow: 1px 0px 0px 0px black;
+    
 }
 
 .title {
@@ -56,7 +57,7 @@ body {
 
 .form__label {
     height: 10px;
-    font-size: 14px;
+    font-size: 17px;
     margin-bottom: 60px;
     font-weight: 300;  
 }
@@ -64,7 +65,8 @@ body {
 
 .button {
     font-size: 16px;
-    padding: 10px 20px;
+    margin-top: 15px;
+    padding: 10px 10px;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
@@ -94,8 +96,7 @@ body {
 
 #sexo,
 #estado-civil {
-appearance: none;
-border: none;
+    
 background-color: #fff;
 padding: 10px;
 border-radius: 5px;
@@ -130,26 +131,3 @@ transition: transform 0.3s ease-in-out;
 transform: translateY(-50%) rotate(180deg);
 }
 
-#data-nascimento::-webkit-calendar-picker-indicator {
-display: none;
-}
-
-#data-nascimento {
-position: relative;
-}
-
-#data-nascimento::before {
-content: "\f073";
-font-family: FontAwesome;
-font-size: 16px;
-color: #0080ff;
-position: absolute;
-top: 50%;
-right: 10px;
-transform: translateY(-50%);
-transition: transform 0.3s ease-in-out;
-}
-
-#data-nascimento:focus::before {
-transform: translateY(-50%) rotate(90deg);
-}

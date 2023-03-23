@@ -14,6 +14,7 @@ async function createTable() {
 }
 
 async function saveDate() {
+  event.preventDefault()
   const nome = document.getElementById('nome').value;
   const rg = document.getElementById('rg').value;
   const cpf = document.getElementById('cpf').value;
@@ -26,6 +27,7 @@ async function saveDate() {
   const sexo = document.getElementById('sexo').value;
   const datanascimento = document.getElementById('data-nascimento').value;
   const estadocivil = document.getElementById('estado-civil').value;
+  console.log(nome, rg, cpf, endereco, numero, bairro, cidade, estado, complemento, sexo, datanascimento, estadocivil)
 
   await createTable();
 
@@ -33,7 +35,7 @@ async function saveDate() {
     db.transaction(
       tx => {
         tx.executeSql(
-          'INSERT INTO pessoas (nome, rg, cpf, endereco, numero, bairro, cidade, estado, complemento, sexo, datanascimento, estadocivil)',
+          'INSERT INTO pessoas (nome, rg, cpf, endereco, numero, bairro, cidade, estado, complemento, sexo, datanascimento, estadocivil) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
           [nome, rg, cpf, endereco, numero, bairro, cidade, estado, complemento, sexo, datanascimento, estadocivil],
           resolve,
           (_, error) => reject(error)
