@@ -57,7 +57,8 @@ function clearData() {
     document.getElementById("sexo").value = "masculino";
     document.getElementById("estado-civil").value = "solteiro";
   }
-  function formatCPF(cpfInput) {
+
+function formatCPF(cpfInput) {
     let cpf = cpfInput.value.replace(/\D/g, ''); 
 
     cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2'); 
@@ -75,4 +76,22 @@ function clearData() {
     rg = rg.replace(/(\d{3})(\d{1,2})$/, '$1-$2'); 
 
     rgInput.value = rg;
+}
+
+function validateForm() {
+  let nome = document.getElementById("nome").value;
+  let rg = document.getElementById("rg").value;
+  let cpf = document.getElementById("cpf").value;
+  let cep = document.getElementById("cep").value;
+  let endereco = document.getElementById("endereco").value;
+  let cidade = document.getElementById("cidade").value;
+  let numero = document.getElementById("numero").value;
+  let bairro = document.getElementById("bairro").value;
+  let estado = document.getElementById("estado").value;
+
+  if (nome === "" || rg === "" || cpf === "" || cep === "" || endereco === "" || cidade === "" || numero === "" || bairro === "" || estado === "") {
+    alert("Por favor, preencha todos os campos obrigatórios.");
+    return false;
+  }
+  return true;
 }
