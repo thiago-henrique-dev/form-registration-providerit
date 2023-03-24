@@ -28,7 +28,6 @@ async function saveDate() {
   const sexo = document.getElementById('sexo').value;
   const datanascimento = document.getElementById('data-nascimento').value;
   const estadocivil = document.getElementById('estado-civil').value;
-  console.log(nome, rg, cpf, endereco, numero, bairro, cidade, estado, complemento, sexo, datanascimento, estadocivil)
 
   await createTable();
 
@@ -48,27 +47,27 @@ async function saveDate() {
   });
 }
 
-function clearData() {
-    const elements = ["nome", "rg", "cpf", "cep", "endereco", "data-nascimento", "bairro", "complemento",
-    "numero", "estado", "cidade"];
-    
-    elements.forEach((element) => {
-      document.getElementById(element).value = "";
-    });
-    
-    document.getElementById("sexo").value = "masculino";
-    document.getElementById("estado-civil").value = "solteiro";
+  function clearData() {
+      const elements = ["nome", "rg", "cpf", "cep", "endereco", "data-nascimento", "bairro", "complemento",
+      "numero", "estado", "cidade"];
+      
+      elements.forEach((element) => {
+        document.getElementById(element).value = "";
+      });
+      
+      document.getElementById("sexo").value = "masculino";
+      document.getElementById("estado-civil").value = "solteiro";
+    }
+
+  function formatCPF(cpfInput) {
+      let cpf = cpfInput.value.replace(/\D/g, ''); 
+
+      cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2'); 
+      cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2'); 
+      cpf = cpf.replace(/(\d{3})(\d{1,2})$/, '$1-$2'); 
+
+      cpfInput.value = cpf; 
   }
-
-function formatCPF(cpfInput) {
-    let cpf = cpfInput.value.replace(/\D/g, ''); 
-
-    cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2'); 
-    cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2'); 
-    cpf = cpf.replace(/(\d{3})(\d{1,2})$/, '$1-$2'); 
-
-    cpfInput.value = cpf; 
-}
 
   function formatRG(rgInput) {
     let rg = rgInput.value.replace(/\D/g, ''); 
@@ -78,119 +77,109 @@ function formatCPF(cpfInput) {
     rg = rg.replace(/(\d{3})(\d{1,2})$/, '$1-$2'); 
 
     rgInput.value = rg;
-}
-
-function validateForm() {
-  let nome = document.getElementById("nome").value;
-  let rg = document.getElementById("rg").value;
-  let cpf = document.getElementById("cpf").value;
-  let cep = document.getElementById("cep").value;
-  let endereco = document.getElementById("endereco").value;
-  let cidade = document.getElementById("cidade").value;
-  let numero = document.getElementById("numero").value;
-  let bairro = document.getElementById("bairro").value;
-  let estado = document.getElementById("estado").value;
-
-  if (nome === "" || rg === "" || cpf === "" || cep === "" || endereco === "" || cidade === "" || numero === "" || bairro === "" || estado === "") {
-    alert("Por favor, preencha todos os campos obrigatórios.");
-    return false;
   }
-  return true;
-}
 
+    function validateForm() {
+      let nome = document.getElementById("nome").value;
+      let rg = document.getElementById("rg").value;
+      let cpf = document.getElementById("cpf").value;
+      let cep = document.getElementById("cep").value;
+      let endereco = document.getElementById("endereco").value;
+      let cidade = document.getElementById("cidade").value;
+      let numero = document.getElementById("numero").value;
+      let bairro = document.getElementById("bairro").value;
+      let estado = document.getElementById("estado").value;
 
-function consultAdress(){
-  event.preventDefault()
-    let cep = document.getElementById("cep").value;
-
-    if(cep.length !== 8){
-      alert('CEP invalido')
-      return
+      if (nome === "" || rg === "" || cpf === "" || cep === "" || endereco === "" || cidade === "" || numero === "" || bairro === "" || estado === "") {
+        alert("Por favor, preencha todos os campos obrigatórios.");
+        return false;
+      }
+      return true;
     }
 
-    let url = `https://viacep.com.br/ws/${cep}/json/`
+    function consultAdress(){
+      event.preventDefault()
+        let cep = document.getElementById("cep").value;
 
-    fetch(url).then(function(response){
-      response.json().then(function(data){
+        if(cep.length !== 8){
+          alert('CEP invalido')
+          return
+        }
 
-      let resultCity = document.getElementById("cidade");
-      let resultState = document.getElementById("estado")
+        let url = `https://viacep.com.br/ws/${cep}/json/`
 
-      resultState.value = `${data.uf}`
-      
-      resultCity.value = `${data.localidade}`;
+        fetch(url).then(function(response){
+          response.json().then(function(data){
 
-      })
+          let resultCity = document.getElementById("cidade");
+          let resultState = document.getElementById("estado")
 
-    })
+          resultState.value = `${data.uf}`
+          resultCity.value = `${data.localidade}`;
 
-}
+          })
+        })
+    }
 
-function consultUser() {
-  event.preventDefault();
-  const id = document.getElementById("id_usuario").value;
-  db.transaction(function(tx) {
-    tx.executeSql('SELECT * FROM users WHERE rowid = ?', [id], function(tx, resultado) {
-      // Defina os valores dos campos do formulário com os valores retornados pela consulta
-      let pessoa = resultado.rows.item(0);
-      document.getElementById("nome").value = pessoa.nome;
-      document.getElementById("rg").value = pessoa.rg;
-      document.getElementById("cpf").value = pessoa.cpf;
-      document.getElementById("cep").value = pessoa.cep;
-      document.getElementById("endereco").value = pessoa.endereco;
-      document.getElementById("complemento").value = pessoa.endereco;
-      document.getElementById("cidade").value = pessoa.cidade;
-      document.getElementById("numero").value = pessoa.numero;
-      document.getElementById("bairro").value = pessoa.bairro;
-      document.getElementById("estado").value = pessoa.estado;
-      console.log(pessoa)
-    }, function(tx, error) {
-      console.log('Erro na consulta: ' + error.message);
+    function consultUser() {
+      event.preventDefault();
+      const id = document.getElementById("id_usuario").value;
+      db.transaction(function(tx) {
+        tx.executeSql('SELECT * FROM users WHERE rowid = ?', [id], function(tx, resultado) {
+
+          let pessoa = resultado.rows.item(0);
+          document.getElementById("nome").value = pessoa.nome;
+          document.getElementById("rg").value = pessoa.rg;
+          document.getElementById("cpf").value = pessoa.cpf;
+          document.getElementById("cep").value = pessoa.cep;
+          document.getElementById("endereco").value = pessoa.endereco;
+          document.getElementById("complemento").value = pessoa.endereco;
+          document.getElementById("cidade").value = pessoa.cidade;
+          document.getElementById("numero").value = pessoa.numero;
+          document.getElementById("bairro").value = pessoa.bairro;
+          document.getElementById("estado").value = pessoa.estado;
+          
+        }, function(tx, error) {
+          console.log('Erro na consulta: ' + error.message);
+        });
+      });
+    }
+
+    // Obtém o modal
+    const modal = document.getElementById("myModal");
+
+    // Obtém o botão que abre o modal
+    const openModalBtn = document.getElementById("openModalBtn");
+
+    // Obtém o botão de fechar
+    const closeBtn = document.getElementsByClassName("close")[0];
+
+    // Obtém o botão de consultar usuário
+    const consultUserBtn = document.getElementById("consultUserBtn");
+
+    // Quando o usuário clicar no botão, abre o modal
+    openModalBtn.addEventListener("click", function() {
+      event.preventDefault()
+      modal.style.display = "block";
     });
-  });
-}
 
+    // Quando o usuário clicar no botão de fechar ou fora do modal, fecha o modal
+    closeBtn.addEventListener("click", function() {
+      modal.style.display = "none";
+    });
 
+    window.addEventListener("click", function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    });
 
-// Obtém o modal
-const modal = document.getElementById("myModal");
+    // Quando o usuário clicar no botão de consultar usuário, chama a função consultUser()
+    consultUserBtn.addEventListener("click", consultUser);
 
-// Obtém o botão que abre o modal
-const openModalBtn = document.getElementById("openModalBtn");
-
-// Obtém o botão de fechar
-const closeBtn = document.getElementsByClassName("close")[0];
-
-// Obtém o botão de consultar usuário
-const consultUserBtn = document.getElementById("consultUserBtn");
-
-// Quando o usuário clicar no botão, abre o modal
-openModalBtn.addEventListener("click", function() {
-  event.preventDefault()
-  modal.style.display = "block";
-});
-
-// Quando o usuário clicar no botão de fechar ou fora do modal, fecha o modal
-closeBtn.addEventListener("click", function() {
-  modal.style.display = "none";
-});
-
-window.addEventListener("click", function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-});
-
-
-
-// Quando o usuário clicar no botão de consultar usuário, chama a função consultUser()
-consultUserBtn.addEventListener("click", consultUser);
-
-
-
-// Quando o usuário clicar em qualquer lugar fora do modal, fecha o modal
-window.onclick = function(event) {
-  if (event.target == modal) {
-    closeModal();
-  }
-}
+    // Quando o usuário clicar em qualquer lugar fora do modal, fecha o modal
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        closeModal();
+      }
+    }

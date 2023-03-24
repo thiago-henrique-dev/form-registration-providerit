@@ -14,55 +14,57 @@
     </head>
     <body>
       <div class="container">
-
-
         <h1 class="title">Ficha Cadastral</h1>
-    
         <form class="form">
-          <button class="button button--secondary" id="openModalBtn">Consultar Usuário</button>
-
-          <!-- Modal -->
+          <button id="openModalBtn" 
+              class="button button--secondary">Consultar Usuário</button>
           <div id="myModal" class="modal">
-            <!-- Conteúdo do modal -->
             <div class="modal-content">
               <span class="close">&times;</span>
               <h1 class="title">Consultar dados do Usuario</h1>
-
-              <input class="form__input" type="text" id="id_usuario" placeholder="Digite o ID do usuário">
+              <input  type="text" id="id_usuario" 
+                    class="form__input" placeholder="Digite o ID do usuário">
               <button class="button button--secondary" id="consultUserBtn">Consultar</button>
             </div>
           </div>
-      
           <div class="form__group">
-            <label for="nome" class="form__label">Cadastre seus dados</label>
-            <input type="text" id="nome" name="nome" class="form__input" placeholder="Digite seu nome completo">
+            <label for="nome" 
+                  class="form__label">Cadastre seus dados</label>
+            <input type="text" id="nome" name="nome" 
+                  class="form__input" placeholder="Digite seu nome completo">
           </div>
-    
           <div class="form__group">
             <label for="rg" class="form__label"></label>
-            <input type="text" id="rg" name="rg" class="form__input" placeholder="Digite seu RG" oninput="formatRG(this)">
+            <input type="text" id="rg" name="rg" 
+                  class="form__input" placeholder="Digite seu RG" 
+                  oninput="formatRG(this)">
           </div>
-    
           <div class="form__group">
-          <label for="cpf" class="form__label"></label>
-          <input type="text" id="cpf" name="cpf" class="form__input" placeholder="Digite seu CPF" oninput="formatCPF(this)">
+          <label for="cpf" 
+                class="form__label"></label>
+          <input type="text" id="cpf" name="cpf" 
+                class="form__input" placeholder="Digite seu CPF" 
+                oninput="formatCPF(this)">
         </div>
         <div class="form__group">
-          <label for="sexo" class="form__label"></label>
-          <select id="sexo" name="sexo" class="form__input">
+          <label for="sexo" 
+                class="form__label"></label>
+          <select id="sexo" name="sexo" 
+                class="form__input">
             <option value="masculino">Masculino</option>
             <option value="feminino">Feminino</option>
           </select>
         </div>
-  
         <div class="form__group">
           <label for="data-nascimento" class="form__label"></label>
-          <input type="date" id="data-nascimento" name="data-nascimento" class="form__input">
+          <input type="date" id="data-nascimento" 
+                class="form__input" name="data-nascimento">
         </div>
-  
         <div class="form__group">
-          <label for="estado-civil" class="form__label"></label>
-          <select id="estado-civil" name="estado-civil" class="form__input">
+          <label for="estado-civil" 
+                class="form__label"></label>
+          <select id="estado-civil" name="estado-civil"
+                 class="form__input">
             <option value="solteiro">Solteiro(a)</option>
             <option value="casado">Casado(a)</option>
             <option value="viuvo">Viúvo(a)</option>
@@ -70,43 +72,45 @@
         </div>
           <div class="form__group">
             <label class="form__label">Cadastre seu endereço</label>
-            
-            <input type="text" id="cep" name="cep" class="form__input" placeholder="Digite o CEP">
-            <button onclick="consultAdress()" class="button button--secondary">Consultar CEP</button>
-
-          </div>
-
-          <div class="form__group">
-            <input type="text" id="endereco" name="endereco" class="form__input" placeholder="Rua">
+            <input type="text" id="cep" name="cep" 
+                  class="form__input" placeholder="Digite o CEP">
+            <button onclick="consultAdress()" 
+                  class="button button--secondary">Consultar CEP</button>
           </div>
           <div class="form__group">
-            <input type="text" id="complemento" name="complemento" class="form__input" placeholder="Digite o complemento">
+            <input type="text" id="endereco" name="endereco" 
+                  class="form__input" placeholder="Rua">
           </div>
-
           <div class="form__group">
-            <input type="text" id="cidade" name="cidade" class="form__input" placeholder="Cidade">
+            <input type="text" id="complemento" name="complemento" 
+                  class="form__input" placeholder="Digite o complemento">
           </div>
-
           <div class="form__group">
-            <input type="text" id="numero" name="numero" class="form__input" placeholder="Numero da residência">
+            <input type="text" id="cidade" name="cidade" 
+                  class="form__input" placeholder="Cidade">
           </div>
-
           <div class="form__group">
-            <input type="text" id="bairro" name="bairro" class="form__input" placeholder="Bairro">
+            <input type="text" id="numero" name="numero" 
+                  class="form__input" placeholder="Numero da residência">
           </div>
-
           <div class="form__group">
-            <input type="text" id="estado" name="estado" class="form__input" placeholder="Estado">
+            <input type="text" id="bairro" name="bairro" 
+                  class="form__input" placeholder="Bairro">
           </div>
-
-          
-          <div>
-            <button id="btn-salvar"   onclick="saveDate()" type="submit" class="button button--primary">Enviar</button>
-            <button type="button" onclick="" class="button button--secondary">Editar</button>
-
-            <button type="button" onclick="clearData()" class="button button--secondary">Limpar</button>
+          <div class="form__group">
+            <input type="text" id="estado" name="estado" 
+                  class="form__input" placeholder="Estado">
           </div>
-
+          <div class="form__group">
+            <button id="btn-salvar"   onclick="saveDate()" type="submit" 
+                  class="button button--primary">Enviar</button>
+            <button type="button" onclick="" 
+                  class="button button--secondary">Editar</button>
+            <button type="button" onclick="clearData()" 
+                  class="button button--secondary">Limpar</button>
+            <button type="button" onclick="clearData()" 
+                  class="button button--secondary">Ver Usuarios Cadastrados</button>
+          </div>
         </form>
       </div>
     <script src="script.js"></script>
