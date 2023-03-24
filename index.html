@@ -69,10 +69,10 @@
           </select>
         </div>
           <div class="form__group">
-            <label for="endereco" class="form__label">Cadastre seu endereço</label>
+            <label class="form__label">Cadastre seu endereço</label>
             
             <input type="text" id="cep" name="cep" class="form__input" placeholder="Digite o CEP">
-            <button onclick="consultAdress()" class="button button--secondary">Consulta</button>
+            <button onclick="consultAdress()" class="button button--secondary">Consultar CEP</button>
 
           </div>
 
@@ -101,11 +101,10 @@
 
           
           <div>
+            <button id="btn-salvar"   onclick="saveDate()" type="submit" class="button button--primary">Enviar</button>
             <button type="button" onclick="" class="button button--secondary">Editar</button>
 
-            <button id="btn-salvar"  onclick="return validateForm();" onclick="saveDate()" type="submit" class="button button--primary">Enviar</button>
             <button type="button" onclick="clearData()" class="button button--secondary">Limpar</button>
-            <button type="button" onclick="clearData()" class="button button--secondary">Mostrar</button>
           </div>
 
         </form>

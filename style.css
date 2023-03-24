@@ -165,7 +165,7 @@ transform: translateY(-50%) rotate(180deg);
   cursor: pointer;
 }
 
-/* Estilo do modal */
+    /* Estilo do modal */
 .modal {
     display: none; /* Inicia escondido */
     position: fixed; /* Permanece fixo na tela */

@@ -1,13 +1,13 @@
-const db = openDatabase('provider', '1.0', 'Test DB', 2 * 1024 * 1024);
+const db = openDatabase('usuarios', '1.0', 'Test DB', 2 * 1024 * 1024);
 
 async function createTable() {
   return new Promise((resolve, reject) => {
     db.transaction(tx => {
       tx.executeSql(
-        'CREATE TABLE IF NOT EXISTS pessoasCadastro (nome TEXT, rg TEXT, cpf TEXT, endereco TEXT, numero INTEGER, bairro TEXT, cidade TEXT, estado TEXT, complemento TEXT, sexo TEXT, datanascimento DATE, estadocivil TEXT)',
+        'CREATE TABLE IF NOT EXISTS users (nome TEXT, rg TEXT, cpf TEXT, cep TEXT, endereco TEXT, numero INTEGER, bairro TEXT, cidade TEXT, estado TEXT, complemento TEXT, sexo TEXT, datanascimento DATE, estadocivil TEXT)',
         [],
         resolve,
-        (_, error) => reject(error)
+        (_, error) => reject(error) 
       );
     });
   });
@@ -18,6 +18,7 @@ async function saveDate() {
   const nome = document.getElementById('nome').value;
   const rg = document.getElementById('rg').value;
   const cpf = document.getElementById('cpf').value;
+  const cep = document.getElementById('cep').value;
   const endereco = document.getElementById('endereco').value;
   const numero = document.getElementById('numero').value;
   const bairro = document.getElementById('bairro').value;
@@ -35,14 +36,15 @@ async function saveDate() {
     db.transaction(
       tx => {
         tx.executeSql(
-          'INSERT INTO pessoas (nome, rg, cpf, endereco, numero, bairro, cidade, estado, complemento, sexo, datanascimento, estadocivil) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-          [nome, rg, cpf, endereco, numero, bairro, cidade, estado, complemento, sexo, datanascimento, estadocivil],
+          'INSERT INTO users (nome, rg, cpf, cep, endereco, numero, bairro, cidade, estado, complemento, sexo, datanascimento, estadocivil) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)',
+          [nome, rg, cpf, cep, endereco, numero, bairro, cidade, estado, complemento, sexo, datanascimento, estadocivil],
           resolve,
           (_, error) => reject(error)
         );
       },
       (_, error) => reject(error)
     );
+    clearData()
   });
 }
 
@@ -128,7 +130,7 @@ function consultUser() {
   event.preventDefault();
   const id = document.getElementById("id_usuario").value;
   db.transaction(function(tx) {
-    tx.executeSql('SELECT * FROM pessoas WHERE rowid = ?', [id], function(tx, resultado) {
+    tx.executeSql('SELECT * FROM users WHERE rowid = ?', [id], function(tx, resultado) {
       // Defina os valores dos campos do formulário com os valores retornados pela consulta
       let pessoa = resultado.rows.item(0);
       document.getElementById("nome").value = pessoa.nome;
@@ -136,10 +138,12 @@ function consultUser() {
       document.getElementById("cpf").value = pessoa.cpf;
       document.getElementById("cep").value = pessoa.cep;
       document.getElementById("endereco").value = pessoa.endereco;
+      document.getElementById("complemento").value = pessoa.endereco;
       document.getElementById("cidade").value = pessoa.cidade;
       document.getElementById("numero").value = pessoa.numero;
       document.getElementById("bairro").value = pessoa.bairro;
       document.getElementById("estado").value = pessoa.estado;
+      console.log(pessoa)
     }, function(tx, error) {
       console.log('Erro na consulta: ' + error.message);
     });
