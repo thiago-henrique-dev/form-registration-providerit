@@ -18,7 +18,8 @@
         <form class="form">
           <button id="openModalBtn" 
               class="button button--secondary">Consultar Usuário</button>
-          <div id="myModal" class="modal">
+         
+              <div id="myModal" class="modal">
             <div class="modal-content">
               <span class="close">&times;</span>
               <h1 class="title">Consultar dados do Usuario</h1>
@@ -27,6 +28,19 @@
               <button class="button button--secondary" id="consultUserBtn">Consultar</button>
             </div>
           </div>
+
+
+          <button id="openModalBtn1" class="button button--secondary">Consultar Usuários</button>
+
+          <div id="myModal1" class="modal">
+            <div class="modal-content1">
+              <span class="close1">&times;</span>
+              <h1 class="title1">Consultar dados do Usuario</h1>
+              <ul  id="userList"></ul>
+            </div>
+          </div>
+          
+
           <div class="form__group">
             <label for="nome" 
                   class="form__label">Cadastre seus dados</label>
@@ -104,12 +118,16 @@
           <div class="form__group">
             <button id="btn-salvar"   onclick="saveDate()" type="submit" 
                   class="button button--primary">Enviar</button>
-            <button type="button" onclick="" 
+            <button  id="btn-edit" type="button" onclick="" 
                   class="button button--secondary">Editar</button>
             <button type="button" onclick="clearData()" 
                   class="button button--secondary">Limpar</button>
-            <button type="button" onclick="clearData()" 
-                  class="button button--secondary">Ver Usuarios Cadastrados</button>
+                  <button type="button" onclick="deleteUser()" 
+                  class="button button--secondary">Excluir</button>
+                 
+                 
+              </div>
+
           </div>
         </form>
       </div>
