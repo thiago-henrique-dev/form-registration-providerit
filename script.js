@@ -26,8 +26,8 @@ async function saveDate() {
   const estado = document.getElementById("estado").value;
   const complemento = document.getElementById("complemento").value;
   const sexo = document.getElementById("sexo").value;
-  const datanascimento = document.getElementById("data-nascimento").value;
-  const estadocivil = document.getElementById("estado-civil").value;
+  const datanascimento = document.getElementById("datanascimento").value;
+  const estadocivil = document.getElementById("estadocivil").value;
 
   await createTable();
 
@@ -68,11 +68,13 @@ function clearData() {
     "nome",
     "rg",
     "cpf",
+    "sexo",
+    "estadocivil",
+    "datanascimento",
     "cep",
     "endereco",
-    "data-nascimento",
-    "bairro",
     "complemento",
+    "bairro",
     "numero",
     "estado",
     "cidade",
@@ -82,33 +84,34 @@ function clearData() {
     document.getElementById(element).value = "";
   });
 
-  document.getElementById("sexo").value = "masculino";
-  document.getElementById("estado-civil").value = "solteiro";
 }
 
 //função para formatar CPF
 function formatCPF(cpfInput) {
   let cpf = cpfInput.value.replace(/\D/g, "");
 
-  cpf = cpf.replace(/(\d{3})(\d)/, "$1.$2");
-  cpf = cpf.replace(/(\d{3})(\d)/, "$1.$2");
-  cpf = cpf.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
-
-  cpfInput.value = cpf;
+  cpf = cpf.padStart(0, '0'); 
+  cpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+  if (cpf.length > 14) { 
+    cpfInput.value = cpf.substring(0, 14);
+  } else {
+    cpfInput.value = cpf;
+  }
 }
 
-//função para formatar RG
+//Função para formatar RG
 function formatRG(rgInput) {
   let rg = rgInput.value.replace(/\D/g, "");
 
-  rg = rg.replace(/(\d{3})(\d)/, "$1.$2");
-  rg = rg.replace(/(\d{3})(\d)/, "$1.$2");
-  rg = rg.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+  rg = rg.replace(/(\d{2})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4$5");
 
-  rgInput.value = rg;
+  rgInput.value = rg.substr(0, 13);
+  
+  if (rgInput.value.length === 12) {
+    rgInput.setAttribute("maxlength", "12");
+  }
 }
-
-//função simples para validar formulario...
+//função simples para validar formulario.
 function validateForm() {
   let nome = document.getElementById("nome").value;
   let rg = document.getElementById("rg").value;
@@ -133,7 +136,7 @@ function validateForm() {
     bairro === "" ||
     estado === ""
   ) {
-    alert("por favor, preencha todos os campos obrigatorios.");
+    alert("preencha todos os campos obrigatorios.");
     return false;
   }
   return true;
@@ -162,7 +165,7 @@ function consultAdress() {
   });
 }
 
-//função para consultar usuario pode ID
+//funcao para consultar usuario por id
 function consultUser() {
   event.preventDefault();
   const id = document.getElementById("id_usuario").value;
@@ -170,10 +173,12 @@ function consultUser() {
     "nome",
     "rg",
     "cpf",
+    "sexo",
+    "datanascimento",
+    "estadocivil",
     "cep",
     "endereco",
     "complemento",
-    "data-nascimento",
     "cidade",
     "numero",
     "bairro",
@@ -186,6 +191,7 @@ function consultUser() {
       [id],
       function (tx, result) {
         let pessoa = result.rows.item(0);
+        console.log(result, "?")
         campos.forEach((field) => {
           document.getElementById(field).value = pessoa[field];
         });
@@ -194,30 +200,30 @@ function consultUser() {
   });
 }
 
-//obtém o modal
+//obtem o modal
 const modal = document.getElementById("myModal");
 
-//obtém o botão que abre o modal
+//obtem o botao que abre o modal
 const openModalBtn = document.getElementById("openModalBtn");
 
-//obtém o botão de fechar
+//obtem o botao de fechar
 const closeBtn = document.getElementsByClassName("close")[0];
 
-//obtém o botão de consultar usuário
+//obtem o boto de consultar usuario
 const consultUserBtn = document.getElementById("consultUserBtn");
 
-//quando o usuário clicar no botão, abre o modal
+// quando o usuario clicar no botão abre o modal
 openModalBtn.addEventListener("click", function () {
   event.preventDefault();
   modal.style.display = "block";
 });
 
-//quando o usuário clicar no botão de fechar ou fora do modal, fecha o modal
+//quando o usuario clicar no botão de fechar, fecha o modal
 closeBtn.addEventListener("click", function () {
   modal.style.display = "none";
 });
 
-//quando o usuario clicar no botão de consultar usuario, chama a função consultUser()
+//quando o usuario clicar no botão de consultar usuario,chama a função consultUser()
 consultUserBtn.addEventListener("click", consultUser);
 
 //função para consultar todos os usuários no banco de dados,,,
@@ -227,7 +233,8 @@ function getAllUsers() {
       tx.executeSql(
         "SELECT * FROM users",
         [],
-        (result) => {
+        (tx, result) => {
+          console.log(result)
           const users = [];
           for (let i = 0; i < result.rows.length; i++) {
             users.push(result.rows.item(i));
@@ -243,26 +250,27 @@ function getAllUsers() {
   });
 }
 
-//modal de consultar todos os Usuarios.
+//modal de consultar todos os usuarios.
 const openModalBtn1 = document.querySelector("#openModalBtn1");
 const modalContent = document.querySelector(".modal-content1");
 
-//adiciona um eventlistener para o evento click no botão openModalBtn1
+//adiciona um eventlistenner para o evento click no botão openModalBtn1
 openModalBtn1.addEventListener("click", async () => {
   event.preventDefault();
 
-  //remove a lista de usuários (se ela já existir)...
+  //remove a lista de usuários caso ela (se ela já existir)...
   const existingUserList = modalContent.querySelector("ul");
   if (existingUserList) {
     modalContent.removeChild(existingUserList);
   }
 
-  // Busca todos os usuários e exibe em uma lista...
+  // busca todos os usuários e exibe em uma lista...
   const users = await getAllUsers();
   const userList = document.createElement("ul");
   users.forEach((user) => {
     const listItem = document.createElement("li");
-    listItem.textContent = `Nome: ${user.nome} - RG: ${user.rg} - CPF: ${user.cpf}`;
+    listItem.textContent = `Nome: ${user.nome}, RG: ${user.rg}, CPF: ${user.cpf}`;
+    listItem.classList.add("user-list-item"); 
     userList.appendChild(listItem);
   });
 
@@ -280,16 +288,19 @@ closeModalBtn.addEventListener("click", () => {
   modal.style.display = "none";
 });
 
+//funcao para atualizar o usuario por ID atraves da function consultUser
 function updateUser() {
   const id = document.getElementById("id_usuario").value;
   const campos = [
     "nome",
     "rg",
     "cpf",
+    "sexo",
+    "datanascimento",
+    "estadocivil",
     "cep",
     "endereco",
     "complemento",
-    "data-nascimento",
     "cidade",
     "numero",
     "bairro",
@@ -299,7 +310,7 @@ function updateUser() {
 
   db.transaction(function (tx) {
     tx.executeSql(
-      "UPDATE users SET nome=?, rg=?, cpf=?, cep=?, endereco=?, complemento=?, datanascimento=?, cidade=?, numero=?, bairro=?, estado=? WHERE rowid=?",
+      "UPDATE users SET nome=?, rg=?, cpf=?, sexo=?, datanascimento=?, estadocivil=?, cep=?, endereco=?, complemento=?, cidade=?, numero=?, bairro=?, estado=? WHERE rowid=?",
       [...valores, id],
       function () {
         console.log("Usuário atualizado com sucesso!");
@@ -311,14 +322,14 @@ function updateUser() {
     );
   });
 }
-
-// Adiciona o evento de click no botão de edição
+// adiciona o evento de click no botão de edicao..
 const btnEdit = document.getElementById("btn-edit");
 btnEdit.addEventListener("click", function () {
   consultUser();
   updateUser();
 });
 
+//deleta o usuario por ID
 function deleteUser() {
   event.preventDefault();
   const id = document.getElementById("id_usuario").value;
@@ -327,12 +338,12 @@ function deleteUser() {
     tx.executeSql(
       "DELETE FROM users WHERE rowid = ?",
       [id],
-      function (tx, resultado) {
-        alert("Usuário excluído com sucesso!");
+      function (tx, result) {
+        alert("usuário excluído com success!");
         clearData();
       },
       function (tx, error) {
-        alert("Erro ao excluir usuário!");
+        alert("erro ao excluir usuario..");
         console.log(error);
       }
     );

@@ -18,7 +18,6 @@
         <form class="form">
           <button id="openModalBtn" 
               class="button button--secondary">Consultar Usuário</button>
-         
               <div id="myModal" class="modal">
             <div class="modal-content">
               <span class="close">&times;</span>
@@ -28,19 +27,14 @@
               <button class="button button--secondary" id="consultUserBtn">Consultar</button>
             </div>
           </div>
-
-
           <button id="openModalBtn1" class="button button--secondary">Consultar Usuários</button>
-
           <div id="myModal1" class="modal">
             <div class="modal-content1">
               <span class="close1">&times;</span>
-              <h1 class="title1">Consultar dados do Usuario</h1>
-              <ul  id="userList"></ul>
+              <h1 class="title">Consultar dados do Usuario</h1>
+              <ul class="user-list" id="userList"></ul>
             </div>
           </div>
-          
-
           <div class="form__group">
             <label for="nome" 
                   class="form__label">Cadastre seus dados</label>
@@ -70,14 +64,14 @@
           </select>
         </div>
         <div class="form__group">
-          <label for="data-nascimento" class="form__label"></label>
-          <input type="date" id="data-nascimento" 
+          <label for="datanascimento" class="form__label"></label>
+          <input type="date" id="datanascimento" 
                 class="form__input" name="data-nascimento">
         </div>
         <div class="form__group">
-          <label for="estado-civil" 
+          <label for="estadocivil" 
                 class="form__label"></label>
-          <select id="estado-civil" name="estado-civil"
+          <select id="estadocivil" name="estadocivil"
                  class="form__input">
             <option value="solteiro">Solteiro(a)</option>
             <option value="casado">Casado(a)</option>
@@ -116,7 +110,7 @@
                   class="form__input" placeholder="Estado">
           </div>
           <div class="form__group">
-            <button id="btn-salvar"   onclick="saveDate()" type="submit" 
+            <button id="btn-salvar" onclick="saveDate()" type="submit" 
                   class="button button--primary">Enviar</button>
             <button  id="btn-edit" type="button" onclick="" 
                   class="button button--secondary">Editar</button>
@@ -124,18 +118,10 @@
                   class="button button--secondary">Limpar</button>
                   <button type="button" onclick="deleteUser()" 
                   class="button button--secondary">Excluir</button>
-                 
-                 
               </div>
-
           </div>
         </form>
       </div>
     <script src="script.js"></script>
-  <script>
-  
-
-  </script>
-
 </body>
 </html>

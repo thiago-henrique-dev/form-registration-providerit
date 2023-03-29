@@ -1,245 +1,222 @@
 * {
-    box-sizing: border-box;
-    }
+  box-sizing: border-box;
+}
 
 body {
-    background-color: #3951b2;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: #3951b2;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
 .container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 50px;
-    background-color: #f5f5f5;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 1px 0px 0px 0px black;
-    
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 50px;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 1px 0px 0px 0px black;
 }
 
 .title {
-    font-size: 20px;
-    text-align: center;
-    margin-bottom: 10px;
-    font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 10px;
+  font-weight: bold;
 }
 
 .form {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .form__group {
-    position: relative;
-    padding-top: 13px;
+  position: relative;
+  padding-top: 13px;
 }
-
 
 .form__input {
-    font-size: 14px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 2px;
-    width: 100%;
-    margin-top: 10px;
-    
+  font-size: 14px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  width: 100%;
+  margin-top: 10px;
 }
 
-
 .form__input:focus {
-    outline: none;
-    border-color: #00050a;
-    border: 2px solid #3951b2;
+  outline: none;
+  border-color: #00050a;
+  border: 2px solid #3951b2;
 }
 
 .form__label {
-    height: 10px;
-    font-size: 17px;
-    margin-bottom: 60px;
-    font-weight: 300;  
+  height: 10px;
+  font-size: 17px;
+  margin-bottom: 60px;
+  font-weight: 300;
 }
 
-
 .button {
-    font-size: 16px;
-    margin-top: 15px;
-    padding: 10px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
+  font-size: 16px;
+  margin-top: 15px;
+  padding: 10px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
 }
 
 .button--primary {
-    background-color: #fff;
-    color: #0080ff;
-    border: 1px solid #0080ff;
+  background-color: #fff;
+  color: #0080ff;
+  border: 1px solid #0080ff;
 }
 
 .button--primary:hover {
-    background-color: #0080ff;
-    color: #fff;
+  background-color: #0080ff;
+  color: #fff;
 }
 
 .button--secondary {
-    background-color: #fff;
-    color: #0080ff;
-    border: 1px solid #0080ff;
+  background-color: #fff;
+  color: #0080ff;
+  border: 1px solid #0080ff;
 }
 
 .button--secondary:hover {
-    background-color: #0080ff;
-    color: #fff;
+  background-color: #0080ff;
+  color: #fff;
 }
 
 #sexo,
-#estado-civil {
-    
-background-color: #fff;
-padding: 10px;
-border-radius: 5px;
-width: 100%;
-height: 40px;
-font-size: 16px;
-color: #333;
-position: relative;
-transition: border-color 0.3s ease-in-out;
+#estadocivil {
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%;
+  height: 40px;
+  font-size: 16px;
+  color: #333;
+  position: relative;
+  transition: border-color 0.3s ease-in-out;
 }
 
 #sexo:focus,
-#estado-civil:focus {
-border-color: #0080ff;
-outline: none;
+#estadocivil:focus {
+  border-color: #0080ff;
+  outline: none;
 }
 
 #sexo::after,
-#estado-civil::after {
-content: "\25BC";
-font-size: 12px;
-color: #0080ff;
-position: absolute;
-top: 50%;
-right: 10px;
-transform: translateY(-50%);
-transition: transform 0.3s ease-in-out;
+#estadocivil::after {
+  content: "\25BC";
+  font-size: 12px;
+  color: #0080ff;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  transition: transform 0.3s ease-in-out;
 }
 
 #sexo:focus::after,
-#estado-civil:focus::after {
-transform: translateY(-50%) rotate(180deg);
+#estadocivil:focus::after {
+  transform: translateY(-50%) rotate(180deg);
 }
 
-    /* Estilo do modal */
+/* modal */
 .modal {
-    display: none; /* Inicia escondido */
-    position: fixed; /* Permanece fixo na tela */
-    z-index: 1; /* Fica acima dos outros elementos */
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto; /* Habilita a rolagem */
-    background-color: rgba(0,0,0,0.4); /* Cor de fundo com transparência */
-  }
-  
-  /* Estilo do conteúdo do modal */
-  .modal-content {
-    background-color: #fff;
-    margin: 10% auto; /* Centraliza o modal verticalmente e 10% do topo */
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    max-width: 600px; /* Largura máxima do modal */
-    width: 80%; /* Largura do modal */
-  }
-  
-  /* Estilo do título */
-  .modal-content h2 {
-    margin-top: 0;
-  }
-  
-  /* Estilo do botão de fechar */
-  .close {
-    color: #aaa;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 30px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  
-  .close:hover,
-  .close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-  }
-
-  .modal1 {
-    display: none; /* Inicia escondido */
-    position: fixed; /* Permanece fixo na tela */
-    z-index: 1; /* Fica acima dos outros elementos */
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto; /* Habilita a rolagem */
-    background-color: rgba(0,0,0,0.4); /* Cor de fundo com transparência */
-  }
-  
-  /* Estilo do conteúdo do modal */
-  .modal-content1 {
-    background-color: #fff;
-    margin: 10% auto; /* Centraliza o modal verticalmente e 10% do topo */
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    max-width: 800px; /* Largura máxima do modal */
-    width: 100%; /* Largura do modal */
-    height: 650px;
-  }
-  
-  /* Estilo do título */
-  .modal-content1 h2 {
-    margin-top: 0;
-  }
-  
-  /* Estilo do botão de fechar */
-  .close1 {
-    color: #aaa;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 30px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  
-  .close1:hover,
-  .close1:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-  }
-
-  .modal ul {
-    margin-top: 50px;
-
-  }
-
-.modal li {
-  padding: 10px;
-  font-size: 20px;
-  list-style-type: none;
+  display: none; /* inicia escondido */
+  position: fixed; /* permanece fixo na tela */
+  z-index: 1; /* fica acima dos outros elementos */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto; /* habilita a rolagem */
+  background-color: rgba(0, 0, 0, 0.4); /* cor de fundo com transparencia */
 }
 
-.modal h1 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 22px;
-  font-weight: 400;
+/* conteudo do modal */
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto; /* centraliza o modal verticalmente e 10porcent do topo */
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  max-width: 600px; /* largura máx do modal */
+  width: 80%; /* largura do modal */
 }
+
+/* titulo */
+.modal-content h2 {
+  margin-top: 0;
+}
+
+/* botão de fechar */
+.close {
+  color: #aaa;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal1 {
+  display: none; /* inicia escondido */
+  position: fixed; /* permanece fixo na tela */
+  z-index: 1; /* fica acima dos outros elementos */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto; /* habilita a rolagem */
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* conteúdo do modal */
+.modal-content1 {
+  background-color: #fff;
+  margin: 10% auto; /* centraliza o modal verticalmente e 10% do topo */
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  max-width: 800px; /* largura max do modal */
+  width: 100%; /* largura do modal */
+  height: 650px;
+}
+
+/* titulo */
+.modal-content1 h2 {
+  margin-top: 0;
+}
+
+/* botao de fechar */
+.close1 {
+  color: #aaa;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close1:hover,
+.close1:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
