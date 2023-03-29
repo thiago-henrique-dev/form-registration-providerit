@@ -143,12 +143,15 @@ function validateForm() {
 }
 
 //função para consultar endereco via cep
+
+
 function consultAdress() {
   event.preventDefault();
-  let cep = document.getElementById("cep").value;
+  let cepInput = document.getElementById("cep");
+  let cep = cepInput.value.replace(/\D/g, ""); // remove caracteres não numéricos
 
   if (cep.length !== 8) {
-    alert("CEP invalido");
+    alert("CEP inválido");
     return;
   }
 
@@ -163,6 +166,17 @@ function consultAdress() {
       resultCity.value = `${data.localidade}`;
     });
   });
+}
+
+let cepInput = document.getElementById("cep");
+cepInput.addEventListener("input", formatCep);
+
+function formatCep(event) {
+  let cep = event.target.value;
+  cep = cep.replace(/\D/g, ""); // remove caracteres não numéricos
+  cep = cep.padStart(8, "0"); // adiciona zeros à esquerda, se necessário
+  cep = cep.replace(/(\d{5})(\d{3})/, "$1-$2"); // adiciona o traço após os primeiros 5 dígitos
+  event.target.value = cep;
 }
 
 //funcao para consultar usuario por id
