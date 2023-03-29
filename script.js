@@ -107,8 +107,6 @@ function clearData() {
     "nome",
     "rg",
     "cpf",
-    "sexo",
-    "estadocivil",
     "datanascimento",
     "cep",
     "endereco",
@@ -119,18 +117,32 @@ function clearData() {
     "cidade",
   ];
 
+  let oneFieldClear = false;
+
   elements.forEach((element) => {
-    document.getElementById(element).value = "";
+    if (document.getElementById(element).value !== "") {
+      document.getElementById(element).value = "";
+      oneFieldClear = true;
+    }
   });
 
-  Swal.fire({
-    icon: 'success',
-    title: 'Campos limpos com sucesso!',
-    showConfirmButton: false,
-    timer: 1000 
-  });
-  
+  if (oneFieldClear) {
+    Swal.fire({
+      icon: "success",
+      title: "Campos limpos com sucesso!",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  } else {
+    Swal.fire({
+      icon: "info",
+      title: "Todos os campos já estão limpos!",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  }
 }
+
 
 //função para formatar CPF
 function formatCPF(cpfInput) {
@@ -404,7 +416,7 @@ function deleteUser() {
           showConfirmButton: false,
           timer: 1500
         }).then(() => {
-          clearData();
+          clearData(false);
           document.getElementById("id_usuario").value = "";
         });
       },
