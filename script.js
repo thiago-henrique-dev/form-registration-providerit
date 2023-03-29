@@ -29,6 +29,45 @@ async function saveDate() {
   const datanascimento = document.getElementById("datanascimento").value;
   const estadocivil = document.getElementById("estadocivil").value;
 
+  let fields = [
+    {name: 'nome', label: 'Nome'},
+    {name: 'rg', label: 'RG'},
+    {name: 'cpf', label: 'CPF'},
+    {name: 'cep', label: 'CEP'},
+    {name: 'endereco', label: 'Endereço'},
+    {name: 'numero', label: 'Número'},
+    {name: 'bairro', label: 'Bairro'},
+    {name: 'cidade', label: 'Cidade'},
+    {name: 'estado', label: 'Estado'},
+    {name: 'complemento', label: 'Complemento'},
+    {name: 'sexo', label: 'Sexo'},
+    {name: 'datanascimento', label: 'Data de Nascimento'},
+    {name: 'estadocivil', label: 'Estado Civil'}
+  ];
+  
+  let field_empty = [];
+  
+  fields.forEach(function(field) {
+    if (!eval(field.name)) {
+      field_empty.push(field.label);
+    }
+  });
+  
+  if (field_empty.length > 0) {
+    let msg = 'Os seguintes fields estão em branco: ';
+    msg += field_empty.join(', ') + '. Por favor preencha eles.';
+  
+    Swal.fire({
+      icon: 'error',
+      title: 'Erro ao enviar...',
+      text: msg
+      
+    });
+
+    return;
+  }
+  
+
   await createTable();
 
   return new Promise((resolve, reject) => {
@@ -84,6 +123,13 @@ function clearData() {
     document.getElementById(element).value = "";
   });
 
+  Swal.fire({
+    icon: 'success',
+    title: 'Campos limpos com sucesso!',
+    showConfirmButton: false,
+    timer: 1000 
+  });
+  
 }
 
 //função para formatar CPF
@@ -111,40 +157,8 @@ function formatRG(rgInput) {
     rgInput.setAttribute("maxlength", "12");
   }
 }
-//função simples para validar formulario.
-function validateForm() {
-  let nome = document.getElementById("nome").value;
-  let rg = document.getElementById("rg").value;
-  let cpf = document.getElementById("cpf").value;
-  let cep = document.getElementById("cep").value;
-  let endereco = document.getElementById("endereco").value;
-  let datanascimento = document.getElementById("data-nascimento").value;
-  let cidade = document.getElementById("cidade").value;
-  let numero = document.getElementById("numero").value;
-  let bairro = document.getElementById("bairro").value;
-  let estado = document.getElementById("estado").value;
-
-  if (
-    nome === "" ||
-    rg === "" ||
-    cpf === "" ||
-    cep === "" ||
-    endereco === "" ||
-    datanascimento === "" ||
-    cidade === "" ||
-    numero === "" ||
-    bairro === "" ||
-    estado === ""
-  ) {
-    alert("preencha todos os campos obrigatorios.");
-    return false;
-  }
-  return true;
-}
 
 //função para consultar endereco via cep
-
-
 function consultAdress() {
   event.preventDefault();
   let cepInput = document.getElementById("cep");
@@ -305,6 +319,17 @@ closeModalBtn.addEventListener("click", () => {
 //funcao para atualizar o usuario por ID atraves da function consultUser
 function updateUser() {
   const id = document.getElementById("id_usuario").value;
+
+  if (!id) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Por favor, consulte um usuário antes de atualizar.',
+      showConfirmButton: false,
+      timer: 1500
+    });
+    return;
+  }
+
   const campos = [
     "nome",
     "rg",
@@ -327,11 +352,22 @@ function updateUser() {
       "UPDATE users SET nome=?, rg=?, cpf=?, sexo=?, datanascimento=?, estadocivil=?, cep=?, endereco=?, complemento=?, cidade=?, numero=?, bairro=?, estado=? WHERE rowid=?",
       [...valores, id],
       function () {
-        console.log("Usuário atualizado com sucesso!");
+        Swal.fire({
+          icon: 'success',
+          title: 'Usuário atualizado com sucesso!',
+          showConfirmButton: false,
+          timer: 1500
+        });
         clearData();
+        document.getElementById("id_usuario").value = "";
+
       },
       function (tx, error) {
-        console.log("Erro ao atualizar usuário: ");
+        Swal.fire({
+          icon: 'error',
+          title: 'Erro ao atualizar usuário',
+          text: error.message
+        });
       }
     );
   });
@@ -348,16 +384,36 @@ function deleteUser() {
   event.preventDefault();
   const id = document.getElementById("id_usuario").value;
 
+  if (!id) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Erro ao excluir usuário',
+      text: 'É necessário informar o id do usuário a ser excluído.'
+    });
+    return;
+  }
+
   db.transaction(function (tx) {
     tx.executeSql(
       "DELETE FROM users WHERE rowid = ?",
       [id],
       function (tx, result) {
-        alert("usuário excluído com success!");
-        clearData();
+        Swal.fire({
+          icon: 'success',
+          title: 'Usuário excluído com sucesso!',
+          showConfirmButton: false,
+          timer: 1500
+        }).then(() => {
+          clearData();
+          document.getElementById("id_usuario").value = "";
+        });
       },
       function (tx, error) {
-        alert("erro ao excluir usuario..");
+        Swal.fire({
+          icon: 'error',
+          title: 'Erro ao excluir usuário',
+          text: 'Ocorreu um erro ao tentar excluir o usuário. Tente novamente mais tarde.',
+        });
         console.log(error);
       }
     );

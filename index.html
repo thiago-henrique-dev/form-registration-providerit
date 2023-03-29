@@ -11,11 +11,12 @@
       <meta charset="UTF-8">
       <title>Ficha Cadastral</title>
       <link rel="stylesheet" href="style.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.css">
     </head>
     <body>
       <div class="container">
         <h1 class="title">Ficha Cadastral</h1>
-        <form class="form">
+        <form class="form" method="post">
           <button id="openModalBtn" 
               class="button button--secondary">Consultar Usuário</button>
               <div id="myModal" class="modal">
@@ -38,8 +39,8 @@
           <div class="form__group">
             <label for="nome" 
                   class="form__label">Cadastre seus dados</label>
-            <input type="text" id="nome" name="nome" 
-                  class="form__input" placeholder="Digite seu nome completo">
+            <input type="text" id="nome" name="nome"
+                  class="form__input" placeholder="Digite seu nome completo"  required name=nome>
           </div>
           <div class="form__group">
             <label for="rg" class="form__label"></label>
@@ -123,5 +124,6 @@
         </form>
       </div>
     <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.js"></script>
 </body>
 </html>
