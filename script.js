@@ -30,43 +30,41 @@ async function saveDate() {
   const estadocivil = document.getElementById("estadocivil").value;
 
   let fields = [
-    {name: 'nome', label: 'Nome'},
-    {name: 'rg', label: 'RG'},
-    {name: 'cpf', label: 'CPF'},
-    {name: 'cep', label: 'CEP'},
-    {name: 'endereco', label: 'Endereço'},
-    {name: 'numero', label: 'Número'},
-    {name: 'bairro', label: 'Bairro'},
-    {name: 'cidade', label: 'Cidade'},
-    {name: 'estado', label: 'Estado'},
-    {name: 'complemento', label: 'Complemento'},
-    {name: 'sexo', label: 'Sexo'},
-    {name: 'datanascimento', label: 'Data de Nascimento'},
-    {name: 'estadocivil', label: 'Estado Civil'}
+    { name: "nome", label: "Nome" },
+    { name: "rg", label: "RG" },
+    { name: "cpf", label: "CPF" },
+    { name: "cep", label: "CEP" },
+    { name: "endereco", label: "Endereço" },
+    { name: "numero", label: "Número" },
+    { name: "bairro", label: "Bairro" },
+    { name: "cidade", label: "Cidade" },
+    { name: "estado", label: "Estado" },
+    { name: "complemento", label: "Complemento" },
+    { name: "sexo", label: "Sexo" },
+    { name: "datanascimento", label: "Data de Nascimento" },
+    { name: "estadocivil", label: "Estado Civil" },
   ];
-  
+
   let field_empty = [];
-  
-  fields.forEach(function(field) {
+
+  fields.forEach(function (field) {
     if (!eval(field.name)) {
       field_empty.push(field.label);
     }
   });
-  
-  if (field_empty.length > 0) {
-    let msg = 'Os seguintes fields estão em branco: ';
-    msg += field_empty.join(', ') + '. Por favor preencha eles.';
-  
-    Swal.fire({
-      icon: 'error',
-      title: 'Erro ao enviar...',
-      text: msg
-      
-    });
 
+  if (field_empty.length > 0) {
+    let msg = "Os seguintes fields estão em branco: ";
+    msg += field_empty.join(", ") + ". Por favor preencha eles.";
+    
+
+    Swal.fire({
+      icon: "error",
+      title: "Erro ao enviar...",
+      text: msg,
+    });
     return;
   }
-  
 
   await createTable();
 
@@ -96,11 +94,10 @@ async function saveDate() {
       },
       (error) => reject(error)
     );
-   
+
     clearData();
   });
 }
-
 
 //função para limpar os campos dos input
 function clearData() {
@@ -144,14 +141,13 @@ function clearData() {
   }
 }
 
-
 //função para formatar CPF
 function formatCPF(cpfInput) {
   let cpf = cpfInput.value.replace(/\D/g, "");
 
-  cpf = cpf.padStart(0, '0'); 
-  cpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
-  if (cpf.length > 14) { 
+  cpf = cpf.padStart(0, "0");
+  cpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+  if (cpf.length > 14) {
     cpfInput.value = cpf.substring(0, 14);
   } else {
     cpfInput.value = cpf;
@@ -165,33 +161,33 @@ function formatRG(rgInput) {
   rg = rg.replace(/(\d{2})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4$5");
 
   rgInput.value = rg.substr(0, 13);
-  
+
   if (rgInput.value.length === 12) {
     rgInput.setAttribute("maxlength", "12");
   }
 }
 
 function birthValidation() {
-  let inputNascimento = document.getElementById('datanascimento');
+  let inputNascimento = document.getElementById("datanascimento");
 
-  inputNascimento.addEventListener('blur', (event) => {
+  inputNascimento.addEventListener("blur", (event) => {
     const birth = event.target.value;
-    console.log(birth)
+    console.log(birth);
 
     // extrair os 4 últimos caracteres
     const year = parseInt(birth.substring(0, 4));
-    console.log(year, "a" )
+    console.log(year, "a");
 
     if (isNaN(year) || year < 1900 || year > new Date().getFullYear()) {
       Swal.fire({
-        icon: 'warning',
-        title: 'Por favor, insira uma data válida.',
+        icon: "warning",
+        title: "Por favor, insira uma data válida.",
         showConfirmButton: false,
-        timer: 1500
+        timer: 1500,
       });
-      inputNascimento.value = ""
+      inputNascimento.value = "";
     }
-  }); 
+  });
 }
 birthValidation();
 
@@ -205,14 +201,14 @@ function consultAdress() {
   fetch(url).then(function (resp) {
     resp.json().then(function (data) {
       Swal.fire({
-        icon: 'success',
-        title: 'Operação realizada com sucesso .',
+        icon: "success",
+        title: "Operação realizada com sucesso .",
         showConfirmButton: false,
-        timer: 1200
+        timer: 1200,
       });
       let resultCity = document.getElementById("cidade");
       let resultState = document.getElementById("estado");
-      console.log(resp)
+      console.log(resp);
       resultState.value = `${data.uf}`;
       resultCity.value = `${data.localidade}`;
     });
@@ -236,60 +232,60 @@ function formatCep(event) {
 
 document.getElementById("cep").addEventListener("input", formatCep);
 
+  function consultUser() {
+    event.preventDefault();
+    const id = document.getElementById("id_usuario").value;
+    const fields = [
+      "nome",
+      "rg",
+      "cpf",
+      "sexo",
+      "datanascimento",
+      "estadocivil",
+      "cep",
+      "endereco",
+      "complemento",
+      "cidade",
+      "numero",
+      "bairro",
+      "estado",
+    ];
 
-function consultUser() {
-  event.preventDefault();
-  const id = document.getElementById("id_usuario").value;
-  const campos = [
-    "nome",
-    "rg",
-    "cpf",
-    "sexo",
-    "datanascimento",
-    "estadocivil",
-    "cep",
-    "endereco",
-    "complemento",
-    "cidade",
-    "numero",
-    "bairro",
-    "estado",
-  ];
+    db.transaction(function (tx) {
+      tx.executeSql(
+        "SELECT * FROM users WHERE rowid = ?",
+        [id],
+        function (tx, result) {
+          if (result.rows.length === 0) {
+            Swal.fire({
+              icon: "warning",
+              title: "Usuário não existe!",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            document.getElementById("id_usuario").value = "";
+            return;
+          }
 
-  db.transaction(function (tx) {
-    tx.executeSql(
-      "SELECT * FROM users WHERE rowid = ?",
-      [id],
-      function (tx, result) {
-        if (result.rows.length === 0) {
+          let user = result.rows.item(0);
+          fields.forEach((field) => {
+            document.getElementById(field).value = user[field];
+          });
+
           Swal.fire({
-            icon: "warning",
-            title: "Usuário não existe!",
+            icon: "success",
+            title: "Usuário encontrado!",
             showConfirmButton: false,
             timer: 1500,
+          }).then(() => {
+            const modal = document.querySelector("#myModal");
+            modal.style.display = "none";
           });
-          return;
+
         }
-
-        let pessoa = result.rows.item(0);
-        campos.forEach((field) => {
-          document.getElementById(field).value = pessoa[field];
-        });
-
-        // show alert and close modal
-        Swal.fire({
-          icon: "success",
-          title: "Usuário encontrado!",
-          showConfirmButton: false,
-          timer: 1500,
-        }).then(() => {
-          const modal = document.querySelector("#myModal");
-          modal.style.display = "none";
-        });
-      }
-    );
-  });
-}
+      );
+    });
+  }
 //obtem o modal
 const modal = document.getElementById("myModal");
 
@@ -324,7 +320,7 @@ function getAllUsers() {
         "SELECT * FROM users",
         [],
         (tx, result) => {
-          console.log(result)
+          console.log(result);
           const users = [];
           for (let i = 0; i < result.rows.length; i++) {
             users.push(result.rows.item(i));
@@ -384,15 +380,15 @@ function updateUser() {
 
   if (!id) {
     Swal.fire({
-      icon: 'warning',
-      title: 'Por favor, consulte um usuário antes de atualizar.',
+      icon: "warning",
+      title: "Por favor, consulte um usuário antes de atualizar.",
       showConfirmButton: false,
-      timer: 1500
+      timer: 1500,
     });
     return;
   }
 
-  const campos = [
+  const fields = [
     "nome",
     "rg",
     "cpf",
@@ -407,7 +403,7 @@ function updateUser() {
     "bairro",
     "estado",
   ];
-  const valores = campos.map((campo) => document.getElementById(campo).value);
+  const valores = fields.map((field) => document.getElementById(field).value);
 
   db.transaction(function (tx) {
     tx.executeSql(
@@ -415,29 +411,28 @@ function updateUser() {
       [...valores, id],
       function () {
         Swal.fire({
-          icon: 'success',
-          title: 'Usuário atualizado com sucesso!',
+          icon: "success",
+          title: "Usuário atualizado com sucesso!",
           showConfirmButton: false,
-          timer: 1500
+          timer: 1500,
         });
-        clearData();
+        
         document.getElementById("id_usuario").value = "";
-
       },
       function (tx, error) {
         Swal.fire({
-          icon: 'error',
-          title: 'Erro ao atualizar usuário',
-          text: error.message
+          icon: "error",
+          title: "Erro ao atualizar usuário",
+          text: error.message,
         });
       }
-    );
-  });
+      );
+    });
+    clearData()
 }
 // adiciona o evento de click no botão de edicao..
 const btnEdit = document.getElementById("btn-edit");
 btnEdit.addEventListener("click", function () {
-  consultUser();
   updateUser();
 });
 
@@ -448,9 +443,9 @@ function deleteUser() {
 
   if (!id) {
     Swal.fire({
-      icon: 'error',
-      title: 'Erro ao excluir usuário',
-      text: 'É necessário informar o id do usuário a ser excluído.'
+      icon: "error",
+      title: "Erro ao excluir usuário",
+      text: "É necessário informar o id do usuário a ser excluído.",
     });
     return;
   }
@@ -461,10 +456,10 @@ function deleteUser() {
       [id],
       function (tx, result) {
         Swal.fire({
-          icon: 'success',
-          title: 'Usuário excluído com sucesso!',
+          icon: "success",
+          title: "Usuário excluído com sucesso!",
           showConfirmButton: false,
-          timer: 1500
+          timer: 1500,
         }).then(() => {
           clearData(false);
           document.getElementById("id_usuario").value = "";
@@ -472,9 +467,9 @@ function deleteUser() {
       },
       function (tx, error) {
         Swal.fire({
-          icon: 'error',
-          title: 'Erro ao excluir usuário',
-          text: 'Ocorreu um erro ao tentar excluir o usuário. Tente novamente mais tarde.',
+          icon: "error",
+          title: "Erro ao excluir usuário",
+          text: "Ocorreu um erro ao tentar excluir o usuário. Tente novamente mais tarde.",
         });
         console.log(error);
       }
