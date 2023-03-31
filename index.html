@@ -16,7 +16,7 @@
     <body>
       <div class="container">
         <h1 class="title">Ficha Cadastral</h1>
-        <form class="form" method="post">
+        <form id="form" class="form" method="post">
           <button id="openModalBtn" 
               class="button button--secondary">Consultar Usuário</button>
               <div id="myModal" class="modal">
@@ -67,7 +67,7 @@
         <div class="form__group">
           <label for="datanascimento" class="form__label"></label>
           <input type="date" id="datanascimento" 
-                class="form__input" name="data-nascimento">
+                class="form__input" name="datanascimento" onchange="validarAnoNascimento()">
         </div>
         <div class="form__group">
           <label for="estadocivil" 

@@ -96,6 +96,7 @@ async function saveDate() {
       },
       (error) => reject(error)
     );
+   
     clearData();
   });
 }
@@ -170,40 +171,68 @@ function formatRG(rgInput) {
   }
 }
 
+function birthValidation() {
+  let inputNascimento = document.getElementById('datanascimento');
+
+  inputNascimento.addEventListener('blur', (event) => {
+    const birth = event.target.value;
+    console.log(birth)
+
+    // extrair os 4 últimos caracteres
+    const year = parseInt(birth.substring(0, 4));
+    console.log(year, "a" )
+
+    if (isNaN(year) || year < 1900 || year > new Date().getFullYear()) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Por favor, insira uma data válida.',
+        showConfirmButton: false,
+        timer: 1500
+      });
+      inputNascimento.value = ""
+    }
+  }); 
+}
+birthValidation();
+
 //função para consultar endereco via cep
 function consultAdress() {
   event.preventDefault();
-  let cepInput = document.getElementById("cep");
-  let cep = cepInput.value.replace(/\D/g, ""); // remove caracteres não numéricos
-
-  if (cep.length !== 8) {
-    alert("CEP inválido");
-    return;
-  }
+  let cep = document.getElementById("cep").value;
 
   let url = `https://viacep.com.br/ws/${cep}/json/`;
 
   fetch(url).then(function (resp) {
     resp.json().then(function (data) {
+      Swal.fire({
+        icon: 'success',
+        title: 'Operação realizada com sucesso .',
+        showConfirmButton: false,
+        timer: 1200
+      });
       let resultCity = document.getElementById("cidade");
       let resultState = document.getElementById("estado");
-
+      console.log(resp)
       resultState.value = `${data.uf}`;
       resultCity.value = `${data.localidade}`;
     });
   });
 }
 
-let cepInput = document.getElementById("cep");
-cepInput.addEventListener("input", formatCep);
-
 function formatCep(event) {
+  const maxLength = 9; 
   let cep = event.target.value;
-  cep = cep.replace(/\D/g, ""); // remove caracteres não numéricos
-  cep = cep.padStart(8, "0"); // adiciona zeros à esquerda, se necessário
-  cep = cep.replace(/(\d{5})(\d{3})/, "$1-$2"); // adiciona o traço após os primeiros 5 dígitos
+  cep = cep.replace(/\D/g, ""); 
+  cep = cep.replace(/(\d{5})(\d{3})/, "$1-$2");
   event.target.value = cep;
+
+  // bloqueia o input quando o número máximo de caracteres é atingido
+  if (event.keyCode !== 8 && cep.length === maxLength) {
+    event.preventDefault();
+  }
 }
+document.getElementById("cep").addEventListener("keydown", formatCep);
+
 
 //funcao para consultar usuario por id
 function consultUser() {
