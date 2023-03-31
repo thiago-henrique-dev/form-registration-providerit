@@ -221,3 +221,33 @@ body {
   cursor: pointer;
 }
 
+.user-list-item {
+  font-size: 18px;
+  margin-bottom: 5px;
+  text-decoration: none;
+  list-style-type: none;
+  padding: 10px;
+
+}
+
+.user-list-item  {
+  font-weight: 500;
+  font-size: 19px;
+}
+
+.user-list-item span.user-nome {
+  font-weight: 300;
+  margin-top: 15px;
+  margin-bottom: 50px;
+}
+
+.user-list-item span.user-rg {
+  font-weight: 300;
+
+}
+
+.user-list-item .user-cpf {
+  font-weight: 300;
+  
+}
+

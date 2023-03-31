@@ -220,21 +220,23 @@ function consultAdress() {
 }
 
 function formatCep(event) {
-  const maxLength = 9; 
+  const maxLength = 9;
   let cep = event.target.value;
-  cep = cep.replace(/\D/g, ""); 
+  cep = cep.replace(/\D/g, "");
   cep = cep.replace(/(\d{5})(\d{3})/, "$1-$2");
   event.target.value = cep;
 
-  // bloqueia o input quando o número máximo de caracteres é atingido
-  if (event.keyCode !== 8 && cep.length === maxLength) {
-    event.preventDefault();
+  // bloqueia a entrada de novos caracteres quando o nUmero máx de caracteres é atingido
+  if (cep.length >= maxLength) {
+    event.target.setAttribute("maxlength", maxLength);
+  } else {
+    event.target.removeAttribute("maxlength");
   }
 }
-document.getElementById("cep").addEventListener("keydown", formatCep);
+
+document.getElementById("cep").addEventListener("input", formatCep);
 
 
-//funcao para consultar usuario por id
 function consultUser() {
   event.preventDefault();
   const id = document.getElementById("id_usuario").value;
@@ -259,16 +261,35 @@ function consultUser() {
       "SELECT * FROM users WHERE rowid = ?",
       [id],
       function (tx, result) {
+        if (result.rows.length === 0) {
+          Swal.fire({
+            icon: "warning",
+            title: "Usuário não existe!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          return;
+        }
+
         let pessoa = result.rows.item(0);
-        console.log(result, "?")
         campos.forEach((field) => {
           document.getElementById(field).value = pessoa[field];
+        });
+
+        // show alert and close modal
+        Swal.fire({
+          icon: "success",
+          title: "Usuário encontrado!",
+          showConfirmButton: false,
+          timer: 1500,
+        }).then(() => {
+          const modal = document.querySelector("#myModal");
+          modal.style.display = "none";
         });
       }
     );
   });
 }
-
 //obtem o modal
 const modal = document.getElementById("myModal");
 
@@ -338,8 +359,8 @@ openModalBtn1.addEventListener("click", async () => {
   const userList = document.createElement("ul");
   users.forEach((user) => {
     const listItem = document.createElement("li");
-    listItem.textContent = `Nome: ${user.nome}, RG: ${user.rg}, CPF: ${user.cpf}`;
-    listItem.classList.add("user-list-item"); 
+    listItem.innerHTML = `Nome: <span class="user-nome">${user.nome}</span>, RG: <span class="user-rg">${user.rg}</span>, CPF: <span class="user-cpf">${user.cpf}</span>`;
+    listItem.classList.add("user-list-item");
     userList.appendChild(listItem);
   });
 
