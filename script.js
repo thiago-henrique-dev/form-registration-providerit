@@ -47,7 +47,7 @@ async function saveDate() {
 
   let field_empty = [];
 
-  fields.forEach(function (field) {
+  fields.forEach(function(field) {
     if (!eval(field.name)) {
       field_empty.push(field.label);
     }
@@ -56,7 +56,6 @@ async function saveDate() {
   if (field_empty.length > 0) {
     let msg = "Os seguintes fields estão em branco: ";
     msg += field_empty.join(", ") + ". Por favor preencha eles.";
-    
 
     Swal.fire({
       icon: "error",
@@ -94,8 +93,13 @@ async function saveDate() {
       },
       (error) => reject(error)
     );
-
     clearData();
+    Swal.fire({
+      icon: 'success',
+      title: 'Dados salvos com sucesso!',
+      showConfirmButton: false,
+      timer: 1500
+    });
   });
 }
 
@@ -174,7 +178,7 @@ function birthValidation() {
     const birth = event.target.value;
     console.log(birth);
 
-    // extrair os 4 últimos caracteres
+    // extrair os 4 últs caracter
     const year = parseInt(birth.substring(0, 4));
     console.log(year, "a");
 
@@ -196,10 +200,30 @@ function consultAdress() {
   event.preventDefault();
   let cep = document.getElementById("cep").value;
 
+  if (cep === "") {
+    Swal.fire({
+      icon: "warning",
+      title: "Por favor, insira um CEP.",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    return; // interrompe a execução da função
+  }
+
   let url = `https://viacep.com.br/ws/${cep}/json/`;
 
   fetch(url).then(function (resp) {
     resp.json().then(function (data) {
+      if (data.erro) {
+        Swal.fire({
+          icon: "warning",
+          title: "CEP não encontrado. Por favor, verifique o CEP informado.",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        return;
+      }
+
       Swal.fire({
         icon: "success",
         title: "Operação realizada com sucesso .",
@@ -232,60 +256,59 @@ function formatCep(event) {
 
 document.getElementById("cep").addEventListener("input", formatCep);
 
-  function consultUser() {
-    event.preventDefault();
-    const id = document.getElementById("id_usuario").value;
-    const fields = [
-      "nome",
-      "rg",
-      "cpf",
-      "sexo",
-      "datanascimento",
-      "estadocivil",
-      "cep",
-      "endereco",
-      "complemento",
-      "cidade",
-      "numero",
-      "bairro",
-      "estado",
-    ];
+function consultUser() {
+  event.preventDefault();
+  const id = document.getElementById("id_usuario").value;
+  const fields = [
+    "nome",
+    "rg",
+    "cpf",
+    "sexo",
+    "datanascimento",
+    "estadocivil",
+    "cep",
+    "endereco",
+    "complemento",
+    "cidade",
+    "numero",
+    "bairro",
+    "estado",
+  ];
 
-    db.transaction(function (tx) {
-      tx.executeSql(
-        "SELECT * FROM users WHERE rowid = ?",
-        [id],
-        function (tx, result) {
-          if (result.rows.length === 0) {
-            Swal.fire({
-              icon: "warning",
-              title: "Usuário não existe!",
-              showConfirmButton: false,
-              timer: 1500,
-            });
-            document.getElementById("id_usuario").value = "";
-            return;
-          }
-
-          let user = result.rows.item(0);
-          fields.forEach((field) => {
-            document.getElementById(field).value = user[field];
-          });
-
+  db.transaction(function (tx) {
+    tx.executeSql(
+      "SELECT * FROM users WHERE rowid = ?",
+      [id],
+      function (tx, result) {
+        if (result.rows.length === 0) {
           Swal.fire({
-            icon: "success",
-            title: "Usuário encontrado!",
+            icon: "warning",
+            title: "Usuário não existe!",
             showConfirmButton: false,
             timer: 1500,
-          }).then(() => {
-            const modal = document.querySelector("#myModal");
-            modal.style.display = "none";
           });
-
+          document.getElementById("id_usuario").value = "";
+          return;
         }
-      );
-    });
-  }
+
+        let user = result.rows.item(0);
+        fields.forEach((field) => {
+          document.getElementById(field).value = user[field];
+        });
+
+        Swal.fire({
+          icon: "success",
+          title: "Usuário encontrado!",
+          showConfirmButton: false,
+          timer: 1500,
+        }).then(() => {
+          const modal = document.querySelector("#myModal");
+          modal.style.display = "none";
+        });
+      }
+    );
+  });
+}
 //obtem o modal
 const modal = document.getElementById("myModal");
 
@@ -403,12 +426,12 @@ function updateUser() {
     "bairro",
     "estado",
   ];
-  const valores = fields.map((field) => document.getElementById(field).value);
+  const values = fields.map((field) => document.getElementById(field).value);
 
   db.transaction(function (tx) {
     tx.executeSql(
       "UPDATE users SET nome=?, rg=?, cpf=?, sexo=?, datanascimento=?, estadocivil=?, cep=?, endereco=?, complemento=?, cidade=?, numero=?, bairro=?, estado=? WHERE rowid=?",
-      [...valores, id],
+      [...values, id],
       function () {
         Swal.fire({
           icon: "success",
@@ -416,7 +439,7 @@ function updateUser() {
           showConfirmButton: false,
           timer: 1500,
         });
-        
+
         document.getElementById("id_usuario").value = "";
       },
       function (tx, error) {
@@ -426,9 +449,9 @@ function updateUser() {
           text: error.message,
         });
       }
-      );
-    });
-    clearData()
+    );
+  });
+  clearData();
 }
 // adiciona o evento de click no botão de edicao..
 const btnEdit = document.getElementById("btn-edit");
@@ -461,7 +484,11 @@ function deleteUser() {
           showConfirmButton: false,
           timer: 1500,
         }).then(() => {
-          clearData(false);
+          Array.from(
+            document.querySelectorAll(
+              "#nome, #rg, #cpf, #cep, #endereco, #numero, #bairro, #cidade, #estado, #complemento, #sexo, #datanascimento, #estadocivil"
+            )
+          ).forEach((input) => (input.value = ""));
           document.getElementById("id_usuario").value = "";
         });
       },
