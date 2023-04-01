@@ -161,9 +161,7 @@ function formatCPF(cpfInput) {
 //Função para formatar RG
 function formatRG(rgInput) {
   let rg = rgInput.value.replace(/\D/g, "");
-
   rg = rg.replace(/(\d{2})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4$5");
-
   rgInput.value = rg.substr(0, 13);
 
   if (rgInput.value.length === 12) {
@@ -207,7 +205,7 @@ function consultAdress() {
       showConfirmButton: false,
       timer: 1500,
     });
-    return; // interrompe a execução da função
+    return;
   }
 
   let url = `https://viacep.com.br/ws/${cep}/json/`;
@@ -231,8 +229,7 @@ function consultAdress() {
         timer: 1200,
       });
       let resultCity = document.getElementById("cidade");
-      let resultState = document.getElementById("estado");
-      console.log(resp);
+      let resultState = document.getElementById("estado")
       resultState.value = `${data.uf}`;
       resultCity.value = `${data.localidade}`;
     });
@@ -246,7 +243,7 @@ function formatCep(event) {
   cep = cep.replace(/(\d{5})(\d{3})/, "$1-$2");
   event.target.value = cep;
 
-  // bloqueia a entrada de novos caracteres quando o nUmero máx de caracteres é atingido
+  // bloqueia a entrada de novos caracts quando o numero máx de caracteres é atingido
   if (cep.length >= maxLength) {
     event.target.setAttribute("maxlength", maxLength);
   } else {
