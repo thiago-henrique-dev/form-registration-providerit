@@ -35,7 +35,7 @@ async function saveDate() {
     { name: "cpf", label: "CPF" },
     { name: "cep", label: "CEP" },
     { name: "endereco", label: "Endereço" },
-    { name: "numero", label: "Número" },
+    { name: "numero", label: "Numero" },
     { name: "bairro", label: "Bairro" },
     { name: "cidade", label: "Cidade" },
     { name: "estado", label: "Estado" },
@@ -101,6 +101,46 @@ async function saveDate() {
       timer: 1500
     });
   });
+}
+
+// consulta o cpf e o rg no banco de dados, se existir aparece uma msg..
+const rgField = document.getElementById("rg");
+const cpfField = document.getElementById("cpf");
+
+rgField.addEventListener("blur", checkIfAlreadyExists);
+cpfField.addEventListener("blur", checkIfAlreadyExists);
+
+async function checkIfAlreadyExists(event) {
+  const fieldValue = event.target.value;
+  const fieldName = event.target.id;
+  
+  if (!fieldValue) {
+    return;
+  }
+
+  let result = await new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        `SELECT * FROM users WHERE ${fieldName} = ? LIMIT 1`,
+        [fieldValue],
+        (tx, result) => {
+          resolve(result.rows.length > 0);
+        },
+        (error) => {
+          reject(error);
+        }
+      );
+    });
+  });
+
+  if (result) {
+    Swal.fire({
+      icon: "info",
+      title: `O ${fieldName.toUpperCase()} já está cadastrado no sistema!`,
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  }
 }
 
 //função para limpar os campos dos input
