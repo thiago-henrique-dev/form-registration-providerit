@@ -59,7 +59,7 @@ async function saveDate() {
 
     Swal.fire({
       icon: "error",
-      title: "Erro ao enviar...",
+      title: "Error ao enviar...",
       text: msg,
     });
     return;
@@ -311,6 +311,17 @@ function consultUser() {
     "bairro",
     "estado",
   ];
+
+   if (id === "") {
+    Swal.fire({
+      icon: "warning",
+      title: "Preencha o campo 'ID do usuário'!",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    return;
+  }
+
 
   db.transaction(function (tx) {
     tx.executeSql(
