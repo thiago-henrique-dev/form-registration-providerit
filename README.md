@@ -6,9 +6,9 @@
 
 - Para melhorar ainda mais a precisao das validaçoes, adicionei eventos Blur nos campos de CPF, RG e data de nascimento. Quando o usuário sai do campo em foco, a validação e feita em tempo real, garantindo que apenas dados validos sejam inseridos na aplicação. Na data de nascimento, o usuario so pode selecionar datas a partir de 1900 e datas do dia atual, evitando a inserçao de dados incorretos.
 
-- Adicionei tambem um limite maximo de caracteres nos campos de RG, CPF e CEP para evitar a inserção de dados incorretos. Alem disso, formatei esses campos no padrão correto, facilitando a leitura e a validacãao dos dados. Quando o usuário atinge o limite maximo de caracteres, o campo e bloqueado para impedir a inserção de dados incorretos.
+- Adcionei tambem um limite maximo de caracteres nos campos de RG, CPF e CEP para evitar a inserção de dados incorretos. Alem disso, formatei esses campos no padrão correto, facilitando a leitura e a validacãao dos dados. Quando o usuário atinge o limite maximo de caracteres, o campo e bloqueado para impedir a inserção de dados incorretos.
 
-- Implementei uma mensagem de confirmaçao para quando o usuario deleta um registro com sucesso, assim como no editar. E se o usuario pesquisar o CEP e o campo estiver em branco, uma mensagem sera exibida para informar que é necessario inserir o CEP, pois o campo esta em branco. 
+- Implementei uma mensagem de confirmaçao para quando o usuario deleta um registro com sucesso, assim como no editar. E se o usuario pesquisar o CEP e o campo estiver em branco, uma mensagem sera exibida para informar que é necessario inserir o CEP, pois o campo esta em branco. Caso o CEP não exista, uma mensagem tambem sera exibida para informar o usuário que o CEP não foi encontrado.
 
 - Adicionei tambem validaçoes no modal de consulta de usuario: se o usuario clicar em consultar e o campo estiver em branco, uma mensagem e exibida; se o usuario nao existir, uma mensagem e exibida; e se o usuario for encontrado, uma mensagem de sucesso é exibida.
 
