@@ -186,16 +186,54 @@ function clearData() {
 }
 
 //função para formatar CPF
+
 function formatCPF(cpfInput) {
   let cpf = cpfInput.value.replace(/\D/g, "");
 
-  cpf = cpf.padStart(0, "0");
-  cpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
-  if (cpf.length > 14) {
-    cpfInput.value = cpf.substring(0, 14);
-  } else {
-    cpfInput.value = cpf;
+  // verificação de CPF válido
+  if (cpf.length === 11) {
+    var Soma;
+    var Resto;
+
+    Soma = 0;
+    for (i = 1; i <= 9; i++) Soma = Soma + parseInt(cpf.substring(i - 1, i)) * (11 - i);
+    Resto = (Soma * 10) % 11;
+
+    if ((Resto == 10) || (Resto == 11)) Resto = 0;
+    if (Resto != parseInt(cpf.substring(9, 10))) {
+      Swal.fire({
+        icon: "warning",
+        title: "Por favor, insira um CPF válido.",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      cpfInput.value = "";
+      return;
+    }
+
+    Soma = 0;
+    for (i = 1; i <= 10; i++) Soma = Soma + parseInt(cpf.substring(i - 1, i)) * (12 - i);
+    Resto = (Soma * 10) % 11;
+
+    if ((Resto == 10) || (Resto == 11)) Resto = 0;
+    if (Resto != parseInt(cpf.substring(10, 11))) {
+      Swal.fire({
+        icon: "warning",
+        title: "CPF Invalido.",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      cpfInput.value = "";
+      return;
+    }
   }
+
+  cpfInput.removeAttribute("readonly");
+
+  cpf = cpf.replace(/(\d{3})(\d)/, "$1.$2");
+  cpf = cpf.replace(/(\d{3})(\d)/, "$1.$2");
+  cpf = cpf.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+  cpfInput.value = cpf.substr(0, 14);
 }
 
 //Função para formatar RG
