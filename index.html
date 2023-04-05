@@ -40,7 +40,7 @@
             <label for="nome" 
                   class="form__label">Cadastre seus dados</label>
             <input type="text" id="nome" name="nome"
-                  class="form__input" placeholder="Digite seu nome completo"  required name=nome>
+                  class="form__input" placeholder="Digite seu nome completo">
           </div>
           <div class="form__group">
             <label for="rg" class="form__label"></label>
@@ -82,9 +82,11 @@
           <div class="form__group">
             <label class="form__label">Cadastre seu endereço</label>
             <input type="text" id="cep" name="cep" 
-                  class="form__input" placeholder="Digite o CEP">
-            <button onclick="consultAdress()" 
-                  class="button button--secondary">Consultar CEP</button>
+                  class="form__input" placeholder="Digite o CEP" >
+                  <button type="button" class="button button--secondary" 
+                          onclick="pesquisacep(document.getElementById('cep').value)">
+                    Consultar CEP
+                  </button>
           </div>
           <div class="form__group">
             <input type="text" id="endereco" name="endereco" 

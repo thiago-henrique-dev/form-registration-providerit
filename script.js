@@ -269,50 +269,69 @@ function birthValidation() {
     }
   });
 }
-birthValidation();
+birthValidation()
 
-//função para consultar endereco via cep
-function consultAdress() {
-  event.preventDefault();
-  let cep = document.getElementById("cep").value;
+function limpa_formulário_cep() {
+  //Limpa valores do formulário de cep.
+  document.getElementById('endereco').value=("");
+  document.getElementById('bairro').value=("");
+  document.getElementById('cidade').value=("");
 
-  if (cep === "") {
-    Swal.fire({
-      icon: "warning",
-      title: "Por favor, insira um CEP.",
-      showConfirmButton: false,
-      timer: 1500,
-    });
-    return;
-  }
-
-  let url = `https://viacep.com.br/ws/${cep}/json/`;
-
-  fetch(url).then(function (resp) {
-    resp.json().then(function (data) {
-      if (data.erro) {
-        Swal.fire({
-          icon: "warning",
-          title: "CEP não encontrado. Por favor, verifique o CEP informado.",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        return;
-      }
-
-      Swal.fire({
-        icon: "success",
-        title: "Operação realizada com sucesso .",
-        showConfirmButton: false,
-        timer: 1200,
-      });
-      let resultCity = document.getElementById("cidade");
-      let resultState = document.getElementById("estado")
-      resultState.value = `${data.uf}`;
-      resultCity.value = `${data.localidade}`;
-    });
-  });
 }
+
+
+function meu_callback(conteudo) {
+  if (!("erro" in conteudo)) {
+      document.getElementById('endereco').value=(conteudo.logradouro);
+      document.getElementById('cidade').value=(conteudo.uf);
+      document.getElementById('estado').value=(conteudo.localidade);
+      document.getElementById('complemento').value=(conteudo.complemento)
+  }
+  else {
+      limpa_formulário_cep();
+      Swal.fire({
+        icon: "warning",
+        title: "CPF Inválido'!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      return;
+  }
+}
+
+
+function pesquisacep(valor) {
+  var cep = valor.replace(/\D/g, '');
+  if (cep != "") {
+      var validacep = /^[0-9]{8}$/;
+
+      if(validacep.test(cep)) {
+          document.getElementById('endereco').value="";
+          document.getElementById('bairro').value="";
+          document.getElementById('cidade').value="";
+          document.getElementById('estado').value="";
+
+          var script = document.createElement('script');
+
+          script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
+          document.body.appendChild(script);
+      }
+      else {
+          limpa_formulário_cep();
+          Swal.fire({
+            icon: "warning",
+            title: "CPF Inválido!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          return;
+      }
+  }
+  else {
+      limpaForm();
+  }
+};
+
 
 function formatCep(event) {
   const maxLength = 9;
